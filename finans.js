@@ -26,8 +26,14 @@ finance.snapshot({
             name = q.name.blue,
             price = q.askRealtime,
             changeVal = (typeof q.changePercentRealtime === 'string')? 0 : q.changePercentRealtime,
-            changeStr = (changeVal * 100) + "%",
-            change = (q.changePercentRealtime >= 0)? changeStr.bgGreen : changeStr.bgRed;
+            changeValStr = changeVal.toString(),
+            decimals = changeValStr.substr(changeValStr.indexOf('.')).length - 1,
+            changeStr,
+            change;
+
+        changeVal = Math.round(changeVal * Math.pow(10, decimals)) / Math.pow(10, decimals - 2);
+        changeStr = changeVal + "%";
+        change = (q.changePercentRealtime >= 0)? changeStr.bgGreen : changeStr.bgRed;
 
         table.push([exchange, symbol, name, price, change]);
     }
