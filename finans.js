@@ -6,25 +6,31 @@ var finance = require('yahoo-finance'),
     util = require('util');
 
 finance.snapshot({
-    symbol: process.argv[2]
-}, function (err, q) {
+    symbols: process.argv[2].split(',')
+}, function (err, stocks) {
     if (err) {
         console.log('Could not find a stock with that symbol.'.red);
         return;
     }
 
-    var exchange = q.stockExchange.grey,
-        symbol = q.symbol.cyan,
-        name = q.name.blue,
-        price = q.askRealtime,
-        changeStr = (q.changePercentRealtime * 100) + "%",
-        change = (q.changePercentRealtime >= 0)? changeStr.bgGreen : changeStr.bgRed;
-
     var table = new Table({
         head: ['Exchange', 'Symbol', 'Name', 'Price', 'Change']
     });
 
-    table.push([exchange, symbol, name, price, change]);
+    var q;
+
+    for (stock in stocks) {
+        q = stocks[stock];
+        var exchange = q.stockExchange.grey,
+            symbol = q.symbol.cyan,
+            name = q.name.blue,
+            price = q.askRealtime,
+            changeVal = (typeof q.changePercentRealtime === 'string')? 0 : q.changePercentRealtime,
+            changeStr = (changeVal * 100) + "%",
+            change = (q.changePercentRealtime >= 0)? changeStr.bgGreen : changeStr.bgRed;
+
+        table.push([exchange, symbol, name, price, change]);
+    }
 
     console.log(table.toString());
 });
