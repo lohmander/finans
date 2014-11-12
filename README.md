@@ -1,6 +1,10 @@
 finans
 ======
 
+# Installation
+
+    npm install -g finans
+
 Simple CLI to list a stock using the Yahoo Finance api
 
 Example usage:
