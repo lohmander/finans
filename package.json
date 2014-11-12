@@ -1,0 +1,23 @@
+{
+  "name": "finans",
+  "version": "0.1.0",
+  "description": "",
+  "main": "finans.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "stock"
+  ],
+  "author": "Hannes Lohmander",
+  "license": "MIT",
+  "dependencies": {
+    "yahoo-finance": "^0.2.10",
+    "colors": "^1.0.3",
+    "cli-table": "^0.3.1"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "finans": "finans.js"
+  }
+}
